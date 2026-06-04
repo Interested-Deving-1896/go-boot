@@ -1,269 +1,75 @@
-Introduction
-============
+[update-readmes]   Mode: rewrite — migrating to template structure...
+# go-boot
 
-The [go-boot](https://github.com/usbarmory/go-boot) project is a
-[TamaGo](https://github.com/usbarmory/tamago) unikernel implementing a UEFI
-Shell and OS loader for AMD64 platforms, allowing UEFI API interaction and OS
-loading.
+[![Built with Ona](https://ona.com/build-with-ona.svg)](https://app.ona.com/#https://github.com/Interested-Deving-1896/go-boot)
 
-The OS loading functionality supports launching of:
- * `.` EFI application images
- * `l` Linux kernels, with configuration parsed from Linux Userspace API (UAPI) [boot loader entries](https://uapi-group.org/specifications/specs/boot_loader_specification/)
- * `w` Windows UEFI boot manager
+<!-- AI:start:what-it-does -->
+_Description pending._
+<!-- AI:end:what-it-does -->
 
-The support of
-[boot-transparency](https://github.com/usbarmory/boot-transparency) is planned
-for future releases.
+## Architecture
 
-The unikernel can be executed as:
-  * EFI application by an [existing loader](https://github.com/usbarmory/go-boot/tree/main?tab=readme-ov-file#executing-as-uefi-application) (e.g. [UEFI shell](https://github.com/pbatard/UEFI-Shell), [systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/))
-  * [EFI boot entry](https://github.com/usbarmory/go-boot/tree/main?tab=readme-ov-file#uefi-boot-manager-entry)
-  * QEMU [plain](https://github.com/usbarmory/go-boot/?tab=readme-ov-file#emulated-hardware-with-qemu) or [confidential](https://github.com/usbarmory/go-boot/?tab=readme-ov-file#confidential-vms) KVM
-  * Google Compute Engine [plain](https://github.com/usbarmory/go-boot/wiki/Google-Compute-Engine) or [confidential](https://github.com/usbarmory/go-boot/wiki/Google-Compute-Engine-(AMD-SEV%E2%80%90SNP)) KVM
+<!-- AI:start:architecture -->
+_Architecture documentation pending._
+<!-- AI:end:architecture -->
 
-Authors
-=======
+## Install
 
-Andrea Barisani
-andrea@inversepath.com
+<!-- Add installation instructions here. This section is yours — the AI will not modify it. -->
 
-Operation
-=========
-
-The default operation is to present an UEFI shell and its help, the ⏎ shortcut
-(identically to `l` or `linux`) boots the default UAPI entry set at compile
-time (see _Compiling_).
-
-```
-Shell> go-boot.efi
-
-initializing EFI services
-initializing console (text)
-
-go-boot • tamago/amd64 (go1.24.1) • UEFI x64
-
-.               <path>                   # load and start EFI image
-build                                    # build information
-cat             <path>                   # show file contents
-clear                                    # clear screen
-cpuid           <leaf> <subleaf>         # show CPU capabilities
-date            (time in RFC339 format)? # show/change runtime date and time
-efivar          (verbose)?               # list UEFI variables
-dns             <host>                   # resolve domain
-exit,quit                                # exit application
-halt,shutdown                            # shutdown system
-info                                     # runtime information
-linux,l         (loader entry path)?     # boot Linux kernel image
-linux,l,\r                               # `l \loader\entries\arch.conf`
-log                                      # show runtime logs
-ls              (<path>)?                # list directory contents
-lspci                                    # list PCI devices
-memmap          (e820)?                  # show UEFI memory map
-mode            <mode>                   # set screen mode
-msr             <hex addr>               # read model-specific register
-net             <ip> <mac> <gw> (debug)? # start UEFI networking
-peek            <hex addr> <size>        # memory display (use with caution)
-poke            <hex addr> <hex value>   # memory write   (use with caution)
-protocol        <registry format GUID>   # locate UEFI protocol
-reset           (cold|warm)?             # reset system
-sev                                      # AMD SEV-SNP information
-sev-kdf                                  # AMD SEV-SNP key derivation
-sev-report      (raw)?                   # AMD SEV-SNP attestation report
-stack                                    # goroutine stack trace (current)
-stackall                                 # goroutine stack trace (all)
-stat            <path>                   # show file information
-uefi                                     # UEFI information
-uptime                                   # show system running time
-windows,win,w                            # launch Windows UEFI boot manager
-
-> uefi
-UEFI Revision ......: 2.70
-Firmware Vendor ....: Lenovo
-Firmware Revision ..: 0x1560
-Runtime Services  ..: 0x90e2eb98
-Boot Services ......: 0x6bd17690
-Frame Buffer .......: 1920x1200 @ 0x4000000000
-Configuration Tables: 0x8f426018
-  ee4e5898-3914-4259-9d6e-dc7bd79403cf (0x8db6dc98)
-  dcfa911d-26eb-469f-a220-38b7dc461220 (0x8b037018)
-...
-
-> memmap
-Type Start            End              Pages            Attributes
-02   0000000090000000 0000000090000fff 0000000000000001 000000000000000f
-...
-
-> linux \loader\entries\arch.conf
-loading boot loader entry \loader\entries\arch.conf
-go-boot exiting EFI boot services and jumping to kernel
-Linux version 6.13.6-arch1-1 (linux@archlinux) (gcc (GCC) 14.2.1 20250207, GNU ld (GNU Binutils) 2.44)
-...
+```bash
+git clone https://github.com/Interested-Deving-1896/go-boot.git
+cd go-boot
 ```
 
-Package documentation
-=====================
+## Usage
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/usbarmory/go-boot.svg)](https://pkg.go.dev/github.com/usbarmory/go-boot)
+<!-- Add usage examples here. This section is yours — the AI will not modify it. -->
 
-Hardware Compatibility List
-===========================
+## Configuration
 
-The list of supported hardware is available in the
-project wiki [HCL](https://github.com/usbarmory/go-boot/wiki#hardware-compatibility-list).
+<!-- Document configuration options here. This section is yours — the AI will not modify it. -->
 
-The list provides test `IMAGE_BASE` values to pass while _Compiling_.
+## CI
 
-Compiling
-=========
+<!-- AI:start:ci -->
+_CI documentation pending._
+<!-- AI:end:ci -->
 
-Build the [TamaGo compiler](https://github.com/usbarmory/tamago-go)
-(or use the [latest binary release](https://github.com/usbarmory/tamago-go/releases/latest)):
+## Mirror chain
 
-```
-wget https://github.com/usbarmory/tamago-go/archive/refs/tags/latest.zip
-unzip latest.zip
-cd tamago-go-latest/src && ./all.bash
-cd ../bin && export TAMAGO=`pwd`/go
-```
-
-The following environment variables configure the `go-boot.efi` executable
-build:
-
-* `IMAGE_BASE`: must be set (in hex) within a memory range
-  available in the target UEFI environment for the unikernel allocation, the
-  [HCL](https://github.com/usbarmory/go-boot/wiki#hardware-compatibility-list) or
-  `memmap` command from an [UEFI Shell](https://github.com/pbatard/UEFI-Shell)
-  can provide such value, when empty a common default value is set.
-
-* `DEFAULT_EFI_ENTRY`: defines the `.` shortcut entry path
-  for EFI image loading, it defaults to `\efi\boot\bootx64.efi`
-  when unspecified.
-
-* `DEFAULT_LINUX_ENTRY`: defines the `linux,l,\r` shortcut loader entry path
-  for Linux kernel image booting, it defaults to `\loader\entries\arch.conf`
-  when unspecified.
-
-* `CONSOLE`: set to either `com1` or `text` (default) controls the output
-  console to either serial port or UEFI console.
-
-* `NET`: set to either `0` (default) or `1` controls enabling of UEFI
-  networking support (see _UEFI networking_).
-
-Build the `go-boot.efi` executable:
+<!-- AI:start:mirror-chain -->
+This repo is maintained in [`Interested-Deving-1896/go-boot`](https://github.com/Interested-Deving-1896/go-boot) and mirrored through:
 
 ```
-git clone https://github.com/usbarmory/go-boot && cd go-boot
-make efi IMAGE_BASE=10000000 CONSOLE=text
+Interested-Deving-1896/go-boot  ──►  OpenOS-Project-OSP/go-boot  ──►  OpenOS-Project-Ecosystem-OOC/go-boot
 ```
 
-Executing as UEFI application
-=============================
+Changes flow downstream automatically via the hourly mirror chain in
+[`fork-sync-all`](https://github.com/Interested-Deving-1896/fork-sync-all).
+Direct commits to OSP or OOC are detected and opened as PRs back to `Interested-Deving-1896`.
+<!-- AI:end:mirror-chain -->
 
-The `go-boot.efi` application executable, built after _Compiling_, can be
-loaded from an [UEFI Shell](https://github.com/pbatard/UEFI-Shell)
-or boot manager, the following example shows an entry for
-[systemd-boot](https://www.freedesktop.org/wiki/Software/systemd/systemd-boot/):
+## Contributors
 
-```
-# /boot/loader/entries/go-boot.conf
-title Go Boot
-efi /EFI/Linux/go-boot.efi
-```
+<!-- AI:start:contributors -->
+_Contributors pending._
+<!-- AI:end:contributors -->
 
-UEFI boot manager entry
-=======================
+## Origins
 
-The following example shows creation of an EFI boot entry using
-[efibootmgr](https://github.com/rhboot/efibootmgr):
+<!-- AI:start:origins -->
+_Original project — no upstream fork._
+<!-- AI:end:origins -->
 
-```
-efibootmgr -C -L "go-boot" -d $DISK -p $PART -l '\EFI\go-boot.efi'
-```
+## Resources
 
-UEFI networking
-===============
+<!-- AI:start:resources -->
+_No additional resource files found._
+<!-- AI:end:resources -->
 
-With `NET=1` passed in the environment builds include UEFI networking support
-through the [Simple Network Protocol](https://uefi.org/specs/UEFI/2.10_A/24_Network_Protocols_SNP_PXE_BIS.html)
-(SNP) and [go-net](https://github.com/usbarmory/go-net).
+## License
 
-On such builds the `net` and `dns` commands become available and `make qemu`
-will require a tap0 interface.
-
-The `net` command takes an IP address in CIDR notation, a fixed MAC address or
-`:` to automatically generate a random MAC, and a gateway IP address as
-arguments.
-
-The optional `debug` strings can be passed as final argument to `net` to enable
-Go [profiling server](https://pkg.go.dev/net/http/pprof) and an unauthenticated
-SSH console exposing the UEFI shell.
-
-```
-> net 10.0.0.1/24 : 10.0.0.2 debug
-starting debug servers:
-        http://10.0.0.1:80/debug/pprof
-        ssh://10.0.0.1:22
-network initialized (10.0.0.1/24 da:e7:ac:e2:5e:05)
-
-> dns golang.org
-[142.251.209.17 2a00:1450:4002:410::2011]
-```
-
-Emulated hardware with QEMU
-===========================
-
-QEMU supported targets can be executed under emulation, using the
-[Open Virtual Machine Firmware](https://github.com/tianocore/tianocore.github.io/wiki/OVMF)
-as follows:
-
-```
-make qemu OVMFCODE=<path to OVMF_CODE.fd>
-```
-
-With `NET=1` tap0 should be configured as follows (Linux example):
-
-```
-ip tuntap add dev tap0 mode tap group <your user group>
-ip addr add 10.0.0.2/24 dev tap0
-ip link set tap0 up
-```
-
-An emulated target can be [debugged with GDB](https://retrage.github.io/2019/12/05/debugging-ovmf-en.html/)
-using `make qemu-gdb`, this will make qemu waiting for a GDB connection that
-can be launched as follows:
-
-```
-gdb -ex "target remote 127.0.0.1:1234"
-```
-
-Breakpoints can be set in the usual way:
-
-```
-b cpuinit
-continue
-```
-
-Confidential VMs
-----------------
-
-The `qemu-snp` target provides an example of execution under
-[AMD Secure Encrypted Virtualization (SEV)](https://www.qemu.org/docs/master/system/i386/amd-memory-encryption.html)
-and can be used on [compatible hardware](https://www.amd.com/en/developer/sev.html).
-
-Cloud deployments
-=================
-
-The following example demonstrates how to create, and deploy, a UEFI-bootable
-image for cloud deployments:
-
-* [Google Compute Engine](https://github.com/usbarmory/go-boot/wiki/Google-Compute-Engine)
-* [Google Compute Engine - Confidential VM (AMD SEV-SNP)](https://github.com/usbarmory/go-boot/wiki/Google-Compute-Engine-(AMD-SEV%E2%80%90SNP))
-
-License
-=======
-
-go-boot | https://github.com/usbarmory/go-boot
-Copyright (c) The go-boot authors. All Rights Reserved.
-
-These source files are distributed under the BSD-style license found in the
-[LICENSE](https://github.com/usbarmory/go-boot/blob/main/LICENSE) file.
+<!-- AI:start:license -->
+<!-- License not detected — add a LICENSE file to this repo. -->
+<!-- AI:end:license -->
